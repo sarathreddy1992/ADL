@@ -10,44 +10,6 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 
-def load_data(standardize=True):
-    dataset = np.load(
-        'C:\\Users\\Nitesh\\Documents\\Visual Studio 2015\\Projects\\Advance_Deep_Learning\\Dataset\\malimg.npz')
-    """
-        :param dataset:
-        :param standardize:
-        :return:
-        """
-
-    features = dataset['arr'][:, 0]
-    features = np.array([feature for feature in features])
-    features = np.reshape(features, (features.shape[0], features.shape[1] * features.shape[2]))
-
-    if standardize:
-        features = StandardScaler().fit_transform(features)
-
-    labels = dataset['arr'][:, 1]
-    labels = np.array([label for label in labels])
-
-    x_test = []
-    y_test = []
-
-    for i in range(len(features)):
-        x_test.append(np.reshape(features[i], [32, 32, 1]))
-        y_test.append(labels[i])
-
-    y_test = one_hot_encode(y_test, 25)
-    x_test = np.asarray(x_test)
-    y_test = np.asarray(y_test)
-    x_train = x_test[:7000]
-    y_train = y_test[:7000]
-    x_test = x_test[7000:]
-    y_test = y_test[7000:]
-
-    return x_train, y_train, x_test, y_test
-
-
-
 def train():
 
     learning_rate= 4e-3
